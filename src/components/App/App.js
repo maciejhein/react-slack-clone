@@ -1,21 +1,23 @@
 import React from "react";
 
+import SideBar from "../SideBar";
+import Messages from "../Messages";
+import MessageInput from "../MessageInput";
+import { ChannelsProvider } from "../../context/Channels";
+import { MessagesProvider } from "../../context/Messages";
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <ChannelsProvider>
+          <MessagesProvider>
+            <SideBar/>
+            <main>
+              <Messages/>
+              <MessageInput />
+            </main>
+          </MessagesProvider>
+        </ChannelsProvider>
     </div>
   );
 }

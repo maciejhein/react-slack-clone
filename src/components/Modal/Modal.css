@@ -1,0 +1,10 @@
+.modal {
+    display: block;
+    position: fixed;
+    height: 20rem;
+    width: 20rem;
+    z-index: 100;
+    left: 40%;
+    top: 40%;
+    background: #4C5F6B;
+  }
