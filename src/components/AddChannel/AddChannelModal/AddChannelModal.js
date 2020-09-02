@@ -1,23 +1,27 @@
 import React from "react";
 import { useFormik } from "formik";
 
+import { useChannels } from "../../../context/Channels";
+import { CHANNEL_ADD } from "../../../constants/actionTypes";
+import { CHANNEL } from "../../../constants/channelTypes";
 import Modal from "../../Modal";
-import { useMessages } from "../../../context/Messages";
-import { MESSAGE_EDIT } from "../../../constants/actionTypes";
 
-const EditMessage = ({ id, message, channelId, onClose }) => {
-  const [, dispatch] = useMessages();
-  const initialValues = {
-    message,
-  };
+const initialValues = {
+  name: "",
+};
+
+const AddChannelModal = ({ onClose }) => {
+  const [, dispatch] = useChannels();
 
   const onSubmit = (values) => {
+    const id = Math.floor((1 + Math.random()) * 0x10000);
+
     dispatch({
-      type: MESSAGE_EDIT,
+      type: CHANNEL_ADD,
       payload: {
         id,
-        message: values.message,
-        channelId,
+        name: values.name,
+        type: CHANNEL,
       },
     });
 
@@ -33,11 +37,11 @@ const EditMessage = ({ id, message, channelId, onClose }) => {
     <Modal>
       <form onSubmit={handleSubmit}>
         <input
-          id="message"
-          name="message"
+          id="name"
+          name="name"
           type="text"
           onChange={handleChange}
-          value={values.message}
+          value={values.name}
         />
         <button type="submit">Submit</button>
       </form>
@@ -45,4 +49,4 @@ const EditMessage = ({ id, message, channelId, onClose }) => {
   );
 };
 
-export default EditMessage;
+export default AddChannelModal;

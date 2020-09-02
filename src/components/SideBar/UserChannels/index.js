@@ -1,3 +1,3 @@
-import UserChannels from './UserChannels';
+import UserChannels from "./UserChannels";
 
 export default UserChannels;

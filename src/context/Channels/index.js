@@ -1,1 +1,1 @@
-export { useChannels, ChannelsProvider } from './ChannelsCfg';
+export { useChannels, ChannelsProvider } from "./ChannelsCfg";

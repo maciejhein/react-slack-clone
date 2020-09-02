@@ -10,14 +10,14 @@ function App() {
   return (
     <div className="app">
       <ChannelsProvider>
-          <MessagesProvider>
-            <SideBar/>
-            <main>
-              <Messages/>
-              <MessageInput />
-            </main>
-          </MessagesProvider>
-        </ChannelsProvider>
+        <MessagesProvider>
+          <SideBar />
+          <main>
+            <Messages />
+            <MessageInput />
+          </main>
+        </MessagesProvider>
+      </ChannelsProvider>
     </div>
   );
 }

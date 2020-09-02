@@ -1,55 +1,53 @@
-import React, { useState } from 'react';
+import React from "react";
 
-import { CHANNEL } from '../../../constants/channelTypes';
-import { useChannels } from '../../../context/Channels';
-import { MESSAGE_DELETE_CHANNEL, CHANNEL_DELETE } from '../../../constants/actionTypes';
-import { useMessages } from '../../../context/Messages';
-import AddChannel from './AddChannel';
+import { CHANNEL } from "../../../constants/channelTypes";
+import { useChannels } from "../../../context/Channels";
+import {
+  MESSAGE_DELETE_CHANNEL,
+  CHANNEL_DELETE,
+} from "../../../constants/actionTypes";
+import { useMessages } from "../../../context/Messages";
+import AddChannel from "../../AddChannel";
 
 const Channels = ({ handleChangeChannel }) => {
-    const [channels, dispatch] = useChannels();
-    const [, messagesDispatch] = useMessages();
-    const [isAddChannelModalOpen, setAddChannelModalOpen] = useState(false);
+  const [channels, dispatch] = useChannels();
+  const [, messagesDispatch] = useMessages();
 
+  const channelList = Object.values(channels.channels).filter(
+    ({ type }) => type === CHANNEL
+  );
 
-    const channelList = Object.values(channels.channels).filter(({ type }) => type === CHANNEL);
+  const handleDeleteChannel = (event, id) => {
+    event.stopPropagation();
 
+    dispatch({
+      type: CHANNEL_DELETE,
+      payload: { id },
+    });
 
-    const handleDeleteChannel = (e, id) => {
-        e.stopPropagation(); 
+    messagesDispatch({
+      type: MESSAGE_DELETE_CHANNEL,
+      payload: { id },
+    });
+  };
 
-        dispatch({
-            type: CHANNEL_DELETE,
-            payload: {id}
-        })
-        
-        messagesDispatch( {
-            type: MESSAGE_DELETE_CHANNEL,
-            payload: { id}
-        })
-    };
-
-    const handleAddChannel = () => {
-        setAddChannelModalOpen(true);
-    }
-
-    const handleCloseAddChannelModal = () => {
-        setAddChannelModalOpen(false);
-    }
-
-    return <>
-        <div>
-            Channels <button onClick={handleAddChannel}>Add</button>
-        </div>
-        <ul>
-            {
-               channelList.map(({ id, name }) => 
-                <li onClick={() => handleChangeChannel(id)} key={id}>{name} <button onClick={(e) => handleDeleteChannel(e,id)}>delete</button></li>)
-            }
-        </ul>
-        {isAddChannelModalOpen && <AddChannel onClose={handleCloseAddChannelModal}/>}
-    </> 
-
-}
+  return (
+    <section>
+      <h3>
+        Channels <AddChannel />
+      </h3>
+      <ul>
+        {channelList.map(({ id, name }) => (
+          <li onClick={() => handleChangeChannel(id)} key={id}>
+            {name}
+            <button onClick={(event) => handleDeleteChannel(event, id)}>
+              delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+};
 
 export default Channels;
